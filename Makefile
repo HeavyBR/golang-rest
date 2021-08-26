@@ -1,6 +1,6 @@
 .PHONY: clean test security build run
 
-APP_NAME = API Golang
+APP_NAME = API Rest Boilerplate
 BUILD_DIR = $(PWD)/build
 MIGRATIONS_FOLDER = $(PWD)/platform/migrations
 DATABASE_URL = postgres://postgres:password@localhost:5432/postgres?sslmode=disable
@@ -80,3 +80,18 @@ docker.stop.redis:
 
 swag.init:
 	swag init
+	
+k8s.start:
+	minikube start
+
+k8s.docker-env:
+	eval $(minikube docker-env)
+
+k8s.stop:
+	minikube stop
+
+k8s.remove:
+	kubectl delete -f kubernetes/
+
+k8s.run: minikube.start minikube.docker-env
+	kubectl apply -f kubernetes/

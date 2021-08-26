@@ -27,6 +27,7 @@ spec:
       containers:
         - image: api
           name: api
+          imagePullPolicy: Never
           ports:
             - containerPort: 5000
           resources: {}
