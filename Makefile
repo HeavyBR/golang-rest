@@ -80,7 +80,7 @@ docker.stop.redis:
 
 swag.init:
 	swag init
-	
+
 k8s.start:
 	minikube start
 
@@ -93,5 +93,5 @@ k8s.stop:
 k8s.remove:
 	kubectl delete -f kubernetes/
 
-k8s.run: minikube.start minikube.docker-env
+k8s.run: k8s.start k8s.docker-env
 	kubectl apply -f kubernetes/
