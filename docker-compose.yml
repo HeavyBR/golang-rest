@@ -1,0 +1,43 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres
+    container_name: postgres
+    hostname: postgres
+    volumes:
+      - $HOME/dev-environment/postgres/data/:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    restart: unless-stopped
+    networks:
+      - dev-network
+  api:
+    build: .
+    container_name: api
+    hostname: api
+    ports:
+      - "5000:5000"
+    networks: 
+      - dev-network
+    depends_on: 
+      - postgres
+      - redis
+  redis:
+    image: redis
+    container_name: redis
+    hostname: redis
+    ports:
+      - "6379:6379"
+    depends_on: 
+      - postgres
+    networks:
+      - dev-network
+
+networks: 
+  dev-network:
+    driver: bridge
+    
